@@ -8,6 +8,7 @@ use app\models\Test;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 
+
 class TaskController extends Controller
 {
     public function actionIndex()
@@ -29,11 +30,11 @@ class TaskController extends Controller
     public function actionTest()
     {
         $model = new Test();
-        if (\yii::$app->request->isPost){
-            $model->load(\yii::$app->request->post());
+        if (\Yii::$app->request->isPost){
+            $model->load(\Yii::$app->request->post());
             $model->image = UploadedFile::getInstance($model, 'image');
             $model->upload();
-            exit();
+            exit;
         }
         return $this->render('test', ['model' => $model]);
 

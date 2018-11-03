@@ -2,7 +2,10 @@
 
 
 namespace app\models;
+use yii\Imagine\Filter\Save;
 use yii\base\Model;
+use yii\imagine\Image;
+
 
 class Test extends Model
 {
@@ -21,9 +24,11 @@ class Test extends Model
     public function upload()
     {
         if ($this->validate()) {
-            $filename = $this->image->getBaseName() . "." . $this->image->getExtension();
-            return $this->image->saveAS(\Yii::getAlias('@webroot/img/') . $filename);
+            $baseName = $this->image->getBaseName() . "." . $this->image->getExtension();
+            $filename = '@webroot/img/' . $baseName;
+            $this->image->saveAS(\Yii::getAlias($filename));
+            Image::thumbnail($filename, 120, 120)
+                ->save(\Yii::getAlias('@webroot/img/small' . $baseName));
         }
-        return false;
     }
 }
